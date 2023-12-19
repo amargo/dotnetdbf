@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using ImpromptuInterface;
 using Dynamitey;
+using System.Xml.Linq;
 
 namespace DotNetDBF.Enumerable
 {
@@ -24,6 +25,16 @@ namespace DotNetDBF.Enumerable
         /// </summary>
         /// <returns></returns>
         object[] GetDataRow();
+
+        IEnumerable<string> GetDynamicMemberNames();
+
+        bool TryGetMember(string name, out object result);
+
+        bool TryGetMember(GetMemberBinder binder, out object result);
+
+        bool TrySetMember(string name, object value);
+
+        bool TrySetMember(SetMemberBinder binder, object value);
     }
 
 #pragma warning disable 618
@@ -62,8 +73,13 @@ namespace DotNetDBF.Enumerable
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
+            return TryGetMember(binder.Name, out result);
+        }
+
+        public bool TryGetMember(string name, out object result)
+        {
             result = null;
-            var tLookup = binder.Name;
+            var tLookup = name;
             var tIndex = Array.FindIndex(_fieldNames,
                 it => it.Equals(tLookup, StringComparison.InvariantCultureIgnoreCase));
 
@@ -84,7 +100,12 @@ namespace DotNetDBF.Enumerable
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
-            var tLookup = binder.Name;
+            return TrySetMember(binder.Name, value);
+        }
+
+        public bool TrySetMember(string name, object value)
+        {
+            var tLookup = name;
             var tIndex = Array.FindIndex(_fieldNames,
                 it => it.Equals(tLookup, StringComparison.InvariantCultureIgnoreCase));
 
@@ -146,7 +167,7 @@ namespace DotNetDBF.Enumerable
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="value">The value.</param>
-        public static void WriteRecord(this DBFWriter writer, Enumerable.IDBFInterceptor value)
+        public static void WriteInterceptorRecord(this DBFWriter writer, Enumerable.IDBFInterceptor value)
         {
             writer.WriteRecord(value.GetDataRow());
         }
@@ -156,7 +177,7 @@ namespace DotNetDBF.Enumerable
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="value">The value.</param>
-        public static void AddRecord(this DBFWriter writer, Enumerable.IDBFInterceptor value)
+        public static void AddInterceptorRecord(this DBFWriter writer, Enumerable.IDBFInterceptor value)
         {
             writer.AddRecord(value.GetDataRow());
         }

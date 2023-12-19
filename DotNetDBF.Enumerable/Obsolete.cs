@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
 // ReSharper disable StringLiteralTypo
 // ReSharper disable IdentifierTypo
-
 
 namespace DotNetDBF.Enumerable
 {
@@ -10,13 +10,11 @@ namespace DotNetDBF.Enumerable
     /// Interface to get the contents of the DBF Wrapper
     /// </summary>
     ///
-    [Obsolete("DotNetDBF.Enumerable.IDBFInterceptor is the new interface name",error:true)]
-    public interface IDBFIntercepter:IDBFInterceptor
+    [Obsolete("DotNetDBF.Enumerable.IDBFInterceptor is the new interface name", error: true)]
+    public interface IDBFIntercepter : IDBFInterceptor
     {
-       
     }
-    
-    
+
     [Obsolete("DotNetDBF.Enumerable.DBFInterceptor is the new class name")]
     public class DBFIntercepter : DBFEnumerable.DBFIntercepter
     {
@@ -24,10 +22,7 @@ namespace DotNetDBF.Enumerable
         {
         }
     }
-
-
 }
-
 
 namespace DotNetDBF.Enumerable
 {
@@ -48,7 +43,6 @@ namespace DotNetDBF.Enumerable
         }
     }
 
-
     [Obsolete("DBFEnumerable is the new class name")]
     public static class Enuemrable
     {
@@ -61,7 +55,6 @@ namespace DotNetDBF.Enumerable
         {
             return writer.NewBlankRow();
         }
-
 
         /// <summary>
         /// Writes the record.
@@ -84,8 +77,8 @@ namespace DotNetDBF.Enumerable
         }
 
         /// <summary>
-        /// Return all the records. T should be interface with getter properties that match types and names of the database. 
-        /// Optionally instead of T being and interface you can pass in an anonymous object with properties that match that 
+        /// Return all the records. T should be interface with getter properties that match types and names of the database.
+        /// Optionally instead of T being and interface you can pass in an anonymous object with properties that match that
         /// database and then you'll get an IEnumerable of that anonymous type with the data filled in.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -107,11 +100,10 @@ namespace DotNetDBF.Enumerable
         public static IEnumerable<dynamic> DynamicAllRecords(DBFReader reader, string whereColumn = null,
             dynamic whereColumnEquals = null)
         {
-            return reader.DynamicAllRecords(whereColumn, (object) whereColumnEquals);
+            return reader.DynamicAllRecords(whereColumn, (object)whereColumnEquals);
         }
 
-
-        [Obsolete("DotNetDBF.Enumerable.IDBFIntercepter is the new interface name",error:true)]
+        [Obsolete("DotNetDBF.Enumerable.IDBFIntercepter is the new interface name", error: true)]
         public interface IDBFIntercepter : DotNetDBF.Enumerable.IDBFInterceptor
         {
         }
