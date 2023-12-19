@@ -388,9 +388,18 @@ namespace DotNetDBF
                                     && tLast != " "
                                     && tLast != NullSymbol)
                                 {
-                                    recordObjects[i] = decimal.Parse(tParsed,
-                                        NumberStyles.Float | NumberStyles.AllowLeadingWhite,
-                                        NumberFormatInfo.InvariantInfo);
+                                    if (tParsed.Length < 5)
+                                    {
+                                        recordObjects[i] = (int?)int.Parse(tParsed,
+                                            NumberStyles.Integer | NumberStyles.AllowLeadingWhite,
+                                            NumberFormatInfo.InvariantInfo);
+                                    }
+                                    else
+                                    {
+                                        recordObjects[i] = (decimal?)decimal.Parse(tParsed,
+                                            NumberStyles.Float | NumberStyles.AllowLeadingWhite,
+                                            NumberFormatInfo.InvariantInfo);
+                                    }
                                 }
                                 else
                                 {
