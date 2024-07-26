@@ -358,6 +358,10 @@ namespace DotNetDBF
                                         NumberStyles.Float | NumberStyles.AllowLeadingWhite,
                                         NumberFormatInfo.InvariantInfo);
                                 }
+                                else if (string.IsNullOrWhiteSpace(tParsed))
+                                {
+                                    recordObjects[i] = null;
+                                }
                                 else
                                 {
                                     recordObjects[i] = null;
@@ -401,9 +405,13 @@ namespace DotNetDBF
                                             NumberFormatInfo.InvariantInfo);
                                     }
                                 }
-                                else
+                                else if (string.IsNullOrWhiteSpace(tParsed))
                                 {
                                     recordObjects[i] = null;
+                                }
+                                else
+                                {
+                                    recordObjects[i] = 0;
                                 }
                             }
                             catch (FormatException e)
